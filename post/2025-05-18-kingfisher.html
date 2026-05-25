@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>湖畔的蒼鷺與第一隻翠鳥 · 一萬種羽毛</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@200;300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<!-- 注意：日誌在 posts/ 資料夾內，連結要用 ../ 回到上層 -->
+<link rel="stylesheet" href="../style.css">
+<style>
+  header.post-hero{height:64vh;min-height:420px;position:relative;overflow:hidden;}
+  .post-hero .hero-img{position:absolute;inset:0;
+    background:linear-gradient(135deg,var(--mist),var(--navy));
+    background-size:cover;background-position:center;
+    display:flex;align-items:center;justify-content:center;}
+  .hero-img .ph{color:rgba(255,255,255,.7);font-size:.9rem;letter-spacing:.08em;
+    display:flex;flex-direction:column;align-items:center;gap:10px;}
+  .hero-img .ph svg{width:46px;height:46px;}
+  .post-hero .hero-img::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(12,41,66,.25) 0%,
+      rgba(12,41,66,0) 40%,rgba(12,41,66,.55) 100%);}
+  .hero-caption{position:absolute;left:0;right:0;bottom:0;z-index:2;
+    max-width:880px;margin:0 auto;padding:0 28px 44px;}
+  .hero-caption .meta{display:flex;gap:18px;flex-wrap:wrap;
+    font-family:"Fraunces",serif;font-style:italic;
+    color:#dce6ec;font-size:.95rem;letter-spacing:.04em;margin-bottom:12px;}
+  .hero-caption h1{font-size:clamp(1.9rem,4vw,2.9rem);font-weight:600;color:#fff;
+    line-height:1.35;letter-spacing:.03em;text-shadow:0 2px 18px rgba(12,41,66,.6);}
+  article{max-width:760px;margin:0 auto;padding:60px 28px 40px;}
+  .back-link{font-family:"Fraunces",serif;font-style:italic;
+    color:var(--warmbrown);font-size:.95rem;margin-bottom:32px;
+    display:inline-flex;align-items:center;gap:7px;}
+  .back-link svg{width:16px;height:16px;}
+  article p.text{font-size:1.06rem;color:var(--ink);margin-bottom:26px;line-height:1.95;}
+  article p.lead{font-family:"Noto Serif TC",serif;font-weight:400;
+    font-size:1.2rem;color:var(--navy);line-height:1.9;margin-bottom:30px;}
+  figure{margin:36px 0;}
+  figure .img{width:100%;border-radius:4px;overflow:hidden;
+    background:linear-gradient(135deg,var(--mist),var(--navy));
+    aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;}
+  figure.tall .img{aspect-ratio:3/4;}
+  figure .img .ph{color:rgba(255,255,255,.72);font-size:.84rem;letter-spacing:.06em;
+    display:flex;flex-direction:column;align-items:center;gap:8px;}
+  figure .img .ph svg{width:36px;height:36px;}
+  figcaption{font-size:.88rem;color:var(--ink-soft);margin-top:10px;
+    padding-left:14px;border-left:2px solid var(--mist);}
+  .img-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:36px 0;}
+  .img-pair .img{border-radius:4px;overflow:hidden;aspect-ratio:1/1;
+    background:linear-gradient(135deg,var(--bright),#3a6e8c);
+    display:flex;align-items:center;justify-content:center;}
+  .img-pair .img:nth-child(2){background:linear-gradient(135deg,var(--warmbrown),#b8806e);}
+  .img-pair .img .ph{color:rgba(255,255,255,.72);font-size:.8rem;
+    display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .img-pair .img .ph svg{width:30px;height:30px;}
+  blockquote{margin:34px 0;padding:20px 26px;background:var(--card);border-radius:4px;
+    font-family:"Noto Serif TC",serif;font-size:1.05rem;color:var(--navy);}
+  article h2.subhead{font-family:"Noto Serif TC",serif;font-weight:600;
+    font-size:1.4rem;color:var(--maroon);margin:40px 0 16px;letter-spacing:.03em;}
+  .post-foot{max-width:760px;margin:0 auto;padding:30px 28px 60px;
+    border-top:1px solid var(--hair);}
+  .post-foot .label{font-family:"Fraunces",serif;font-style:italic;
+    color:var(--warmbrown);font-size:.9rem;margin-bottom:12px;}
+  .post-foot .tags{margin-bottom:30px;}
+  .post-nav{display:flex;justify-content:space-between;gap:16px;}
+  .post-nav a{flex:1;background:var(--card);border-radius:4px;padding:18px 22px;
+    transition:background .3s;}
+  .post-nav a:hover{background:var(--card-hi);}
+  .post-nav .dir{font-family:"Fraunces",serif;font-style:italic;
+    color:var(--warmbrown);font-size:.85rem;margin-bottom:4px;}
+  .post-nav .pt{color:var(--ink);font-size:.98rem;font-family:"Noto Serif TC",serif;}
+  .post-nav .next{text-align:right;}
+  @media(max-width:760px){
+    .img-pair{grid-template-columns:1fr;}
+    .post-nav{flex-direction:column;}
+    .post-nav .next{text-align:left;}
+    article{padding:44px 22px 30px;}
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav" class="solid">
+  <div class="nav-inner">
+    <div class="brand">
+      <img class="logo" src="../assets/squirrel-white.svg" alt="">
+      <a href="../index.html" style="color:#fff;">一萬種羽毛</a>
+    </div>
+    <button class="menu-btn" id="menuBtn" aria-label="選單">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../journal.html" class="active">觀鳥日誌</a></li>
+      <li><a href="../birdlist.html">羽毛總錄</a></li>
+      <li><a href="../index.html#furlog">一千種絨毛</a></li>
+      <li><a href="../gallery.html">影集</a></li>
+      <li><a href="../index.html#places">觀察地點</a></li>
+      <li><a href="../beyond.html">森林之外</a></li>
+      <li><a href="../index.html#about">站主</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- 文章頁首大圖 -->
+<header class="post-hero">
+  <div class="hero-img">
+    <!-- ▼ 把這個 div 換成主圖：style="background-image:url('img/xxx.jpg')" -->
+    <div class="ph">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M7 5l1.5-2h7L17 5"/></svg>
+      這篇日誌的主圖
+    </div>
+  </div>
+  <div class="hero-caption">
+    <div class="meta"><span>2025.05.18</span><span>霞ヶ浦</span><span>晴・微風</span></div>
+    <h1>湖畔的蒼鷺與第一隻翠鳥</h1>
+  </div>
+</header>
+
+<!-- 文章主體 -->
+<article>
+  <a href="../journal.html" class="back-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    回到觀鳥日誌
+  </a>
+
+  <p class="lead">清晨六點到湖邊，水面還浮著一層薄霧。空氣是涼的，遠處的鐵塔還在雲裡。這是我們今年第一次特地為了翠鳥出門。</p>
+
+  <p class="text">蒼鷺比我們先到。牠站在淺灘上，一動不動，像是把自己長進了水裡。我們在岸邊蹲下來，誰也不敢出聲，就這樣看了牠足足二十分鐘——牠只動了一次脖子。</p>
+
+  <figure>
+    <div class="img">
+      <div class="ph">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M7 5l1.5-2h7L17 5"/></svg>
+        蒼鷺站在淺灘
+      </div>
+    </div>
+    <figcaption>蒼鷺・霞ヶ浦　清晨的淺灘，牠站了很久。</figcaption>
+  </figure>
+
+  <p class="text">回程的時候，事情發生得很快。一道藍光從水面上掠過去，我們同時「啊」了一聲——翠鳥。牠停在一截枯枝上，背對著光，藍得幾乎不真實。</p>
+
+  <div class="img-pair">
+    <div class="img"><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/></svg>翠鳥側面</div></div>
+    <div class="img"><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/></svg>枯枝上整理羽毛</div></div>
+  </div>
+
+  <blockquote>「相機大多數時候追不上小鳥，但這次終於追到了。」這句話後來變成了我們日誌首頁的那行字。</blockquote>
+
+  <h2 class="subhead">那天還看到的</h2>
+  <p class="text">除了主角，回程沿路也記下了白鶺鴒在堤防上來回小跑，還有一群麻雀在蘆葦間吵鬧。普通的鳥，但那天連牠們看起來都格外有精神。</p>
+
+  <figure class="tall">
+    <div class="img">
+      <div class="ph">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M7 5l1.5-2h7L17 5"/></svg>
+        晨霧中的河堤
+      </div>
+    </div>
+    <figcaption>離開前回頭拍的一張。霧還沒散。</figcaption>
+  </figure>
+
+  <p class="text">回家的路上我們一直在說那道藍光。有些相遇要等很久，但等到了，那一整天就都亮起來了。</p>
+</article>
+
+<div class="post-foot">
+  <p class="label">這篇出現的鳥</p>
+  <div class="tags">
+    <span class="tag">蒼鷺</span>
+    <span class="tag">普通翠鳥</span>
+    <span class="tag">白鶺鴒</span>
+    <span class="tag">麻雀</span>
+  </div>
+  <div class="post-nav">
+    <a href="2025-04-27-tits.html" class="prev">
+      <div class="dir">← 前一篇</div>
+      <div class="pt">樹冠間的山雀群</div>
+    </a>
+    <a href="#" class="next">
+      <div class="dir">下一篇 →</div>
+      <div class="pt">（還沒有）</div>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <p class="latin">One Thousand Feathers, and More.</p>
+  <p>一萬種羽毛 · 一本觀鳥手記</p>
+</footer>
+
+<script>
+  const btn = document.getElementById('menuBtn');
+  const links = document.getElementById('navLinks');
+  btn.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => links.classList.remove('open')));
+</script>
+
+</body>
+</html>
