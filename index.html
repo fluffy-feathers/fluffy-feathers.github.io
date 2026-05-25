@@ -3,343 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- ▼ 網站標題：顯示在瀏覽器分頁上 -->
 <title>一萬種羽毛 · 觀鳥手記</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@200;300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <style>
-  /* ===================================================================
-     「一萬種羽毛」觀鳥博客 — 藍色調版
-     色系：深藍 #11375c / 霧藍 #6fa0bd / 鮮藍 #187fcc
-     卡片：半透明白，疊在霧藍背景上
-     暖色點綴：maroon 標題 #630000 / 暖棕英文 #b07a5a
-     =================================================================== */
-  :root{
-    --navy:       #11375c;   /* 深藍 — 主結構色 */
-    --navy-deep:  #0c2942;   /* 更深的藍 — 頁尾、導航 */
-    --mist:       #6fa0bd;   /* 霧藍 — 輔助 */
-    --bright:     #187fcc;   /* 鮮藍 — 強調、連結 */
-    --bg:         #dfe8ee;   /* 頁面背景 — 淺霧藍灰 */
-    --bg-soft:    #e8eff3;   /* 區塊交替用的更淺藍 */
-    --bg-deep:    #cfdde6;   /* 區塊交替用的略深藍 */
-    --card:       rgba(255,255,255,.55);  /* 半透明卡片 */
-    --card-hi:    rgba(255,255,255,.78);  /* 卡片 hover */
-    --ink:        #233547;   /* 主要文字 — 深藍灰 */
-    --ink-soft:   #4f5f6d;   /* 次要文字 */
-    --maroon:     #630000;   /* 每頁中文標題 */
-    --warmbrown:  #b07a5a;   /* 英文小標題 — 暖棕點綴 */
-    --hair:       rgba(17,55,92,.16);     /* 極細線 */
-    --shadow:     rgba(17,55,92,.14);
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
-    font-family:"Noto Sans TC",-apple-system,sans-serif;
-    font-weight:300;color:var(--ink);line-height:1.85;
-    background:var(--bg);overflow-x:hidden;
-  }
-  h1,h2,h3,.serif{font-family:"Noto Serif TC",serif;}
-  .latin{font-family:"Fraunces",serif;font-style:italic;}
-  a{color:var(--bright);text-decoration:none;}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
-
-  /* ---------- 導覽列 ---------- */
-  nav{
-    position:fixed;top:0;left:0;right:0;z-index:60;
-    transition:background .4s,box-shadow .4s;
-  }
-  nav.scrolled{
-    background:rgba(12,41,66,.95);
-    backdrop-filter:blur(8px);
-    box-shadow:0 2px 18px rgba(12,41,66,.3);
-  }
-  .nav-inner{
-    display:flex;align-items:center;justify-content:space-between;
-    max-width:1180px;margin:0 auto;padding:16px 28px;
-  }
-  .brand{
-    font-family:"Noto Serif TC",serif;font-weight:500;font-size:1.05rem;
-    color:#fff;letter-spacing:.14em;display:flex;align-items:center;gap:10px;
-    opacity:0;transition:opacity .4s;
-  }
-  nav.scrolled .brand{opacity:1;}
-  .brand svg{width:24px;height:24px;}
-  /* 菜單字體：纖細、字距開、靈動 */
-  .nav-links{display:flex;gap:26px;list-style:none;}
-  .nav-links a{
-    color:#fff;font-size:.86rem;font-weight:200;letter-spacing:.16em;
-    padding-bottom:4px;border-bottom:1px solid transparent;
-    transition:.25s;text-shadow:0 1px 8px rgba(0,0,0,.4);
-  }
-  nav.scrolled .nav-links a{text-shadow:none;}
-  .nav-links a:hover{border-color:var(--mist);color:var(--mist);}
-  .menu-btn{
-    display:none;background:none;border:none;cursor:pointer;
-    font-size:1.6rem;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.5);
-  }
-
-  /* ---------- 滿屏封面 ---------- */
-  header.cover{
-    height:100vh;min-height:580px;position:relative;overflow:hidden;
-  }
-  .cover-img{
-    position:absolute;inset:0;
-    /* ▼▼▼ 換封面照片：把檔名換成你的圖片 ▼▼▼ */
-    background-image:url('cover.jpg');
-    /* contain 會完整顯示整張照片不裁切；cover 會鋪滿但裁切。
-       這裡用 cover 鋪滿、並把焦點放中間，盡量保留河流與天空 */
-    background-size:cover;background-position:center center;
-  }
-  /* 幾乎不壓暗 — 只在頂部與底部加極淡的藍，保留照片原本的藍天色調 */
-  .cover-img::after{
-    content:"";position:absolute;inset:0;
-    background:
-      linear-gradient(180deg,rgba(12,41,66,.22) 0%,rgba(12,41,66,0) 22%,
-                      rgba(12,41,66,0) 70%,rgba(223,232,238,.5) 90%,var(--bg) 100%);
-  }
-
-  /* 封面標題：豎排，靠右側 */
-  .cover-title{
-    position:absolute;right:8%;top:50%;transform:translateY(-50%);
-    z-index:3;display:flex;flex-direction:row;align-items:flex-start;gap:14px;
-  }
-  /* 半框：開口朝上 — 左、右、底三邊各一道細線，頂部開口 */
-  .title-frame{
-    border-left:1.5px solid rgba(255,255,255,.9);
-    border-right:1.5px solid rgba(255,255,255,.9);
+  header.cover{height:100vh;min-height:580px;position:relative;overflow:hidden;}
+  .cover-img{position:absolute;inset:0;background-image:url('cover.jpg');
+    background-size:cover;background-position:center center;}
+  .cover-img::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(12,41,66,.22) 0%,rgba(12,41,66,0) 22%,
+      rgba(12,41,66,0) 70%,rgba(223,232,238,.5) 90%,var(--bg) 100%);}
+  .cover-title{position:absolute;right:8%;top:50%;transform:translateY(-50%);
+    z-index:3;display:flex;flex-direction:row;align-items:flex-start;gap:14px;}
+  .title-frame{border-left:1.5px solid rgba(255,255,255,.9);
     border-bottom:1.5px solid rgba(255,255,255,.9);
-    padding:32px 18px 26px;
-  }
-  /* 逐字堆疊的豎排標題 */
-  .cover-title h1{
-    display:flex;flex-direction:column;align-items:center;
-    margin:0;font-weight:500;color:#fff;
-  }
-  .cover-title h1 span{
-    display:block;
-    font-size:clamp(2.2rem,4.4vw,3.2rem);
-    line-height:1.32;letter-spacing:0;
-    text-shadow:0 2px 16px rgba(12,41,66,.55);
-  }
-  /* 英文小標也逐字堆疊 */
-  .cover-eyebrow{
-    display:flex;flex-direction:column;align-items:center;
+    padding:34px 26px 26px 20px;}
+  .cover-title h1{display:flex;flex-direction:column;align-items:center;
+    margin:0;font-weight:500;color:#fff;}
+  .cover-title h1 span{display:block;font-size:clamp(2.2rem,4.4vw,3.2rem);
+    line-height:1.32;text-shadow:0 2px 16px rgba(12,41,66,.55);}
+  .cover-eyebrow{display:flex;flex-direction:column;align-items:center;
     margin:0;font-family:"Fraunces",serif;font-style:italic;
-    color:#fff;opacity:.92;padding-top:6px;
-  }
-  .cover-eyebrow span{
-    display:block;font-size:.92rem;line-height:1.5;
-    text-shadow:0 2px 12px rgba(12,41,66,.6);
-  }
-  .scroll-cue{
-    position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
-    z-index:3;cursor:pointer;animation:bob 2.4s ease-in-out infinite;
-  }
+    color:#fff;opacity:.92;padding-top:6px;}
+  .cover-eyebrow span{display:block;font-size:.92rem;line-height:1.5;
+    text-shadow:0 2px 12px rgba(12,41,66,.6);}
+  .scroll-cue{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+    z-index:3;cursor:pointer;animation:bob 2.4s ease-in-out infinite;}
   .scroll-cue svg{width:30px;height:30px;stroke:#fff;
     filter:drop-shadow(0 1px 8px rgba(12,41,66,.7));}
   @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}
     50%{transform:translateX(-50%) translateY(9px);}}
-
-  /* ---------- 區塊通用 ---------- */
-  main{background:var(--bg);}
-  section{padding:80px 0;}
-  /* 區塊用交替的淺藍底做分隔，不靠框線 */
-  section:nth-child(even){background:var(--bg-soft);}
-  section:nth-child(odd){background:var(--bg-deep);}
-  .sec-head{margin-bottom:44px;}
-  .sec-num{
-    font-family:"Fraunces",serif;font-style:italic;
-    font-size:1rem;color:var(--warmbrown);letter-spacing:.14em;
-  }
-  .sec-head h2{
-    font-size:clamp(1.9rem,3.8vw,2.6rem);font-weight:500;
-    color:var(--maroon);margin-top:4px;letter-spacing:.05em;
-  }
-  .sec-head .en{
-    font-family:"Fraunces",serif;font-style:italic;
-    color:var(--warmbrown);font-size:1.05rem;margin-top:2px;
-  }
-  .sec-head .sub{color:var(--ink);font-size:1.04rem;margin-top:11px;}
-
-  /* ---------- 日誌 ---------- */
-  .entry{
-    display:grid;grid-template-columns:300px 1fr;gap:32px;
-    background:var(--card);border-radius:4px;
-    padding:24px;margin-bottom:24px;
-    transition:transform .3s,background .3s,box-shadow .3s;
-  }
-  .entry:hover{transform:translateY(-3px);background:var(--card-hi);
-    box-shadow:0 14px 32px var(--shadow);}
-  .entry .photo{
-    border-radius:3px;min-height:206px;
-    display:flex;align-items:center;justify-content:center;flex-direction:column;
-    color:#fff;text-align:center;font-size:.82rem;letter-spacing:.05em;
-    background:linear-gradient(135deg,var(--mist),var(--navy));
-  }
-  .entry .photo svg{width:38px;height:38px;opacity:.85;margin-bottom:8px;}
-  .entry-meta{
-    display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem;color:var(--warmbrown);
-    font-family:"Fraunces",serif;font-style:italic;
-    letter-spacing:.03em;margin-bottom:6px;
-  }
-  .entry h3{font-size:1.4rem;font-weight:500;color:var(--ink);margin-bottom:10px;}
-  .entry p{color:var(--ink-soft);font-size:.96rem;margin-bottom:14px;}
-  .tags{display:flex;gap:8px;flex-wrap:wrap;}
-  .tag{
-    font-size:.78rem;background:rgba(24,127,204,.1);color:var(--navy);
-    padding:3px 12px;border-radius:20px;
-  }
-
-  /* ---------- 清單表格 ---------- */
-  .count-badge{
-    display:inline-block;background:var(--navy);color:#fff;
-    font-family:"Fraunces",serif;font-style:italic;
-    padding:3px 16px;border-radius:20px;font-size:1rem;margin-bottom:18px;
-  }
-  .list-table{
-    width:100%;border-collapse:collapse;
-    background:var(--card);border-radius:4px;overflow:hidden;
-  }
-  .list-table th{
-    text-align:left;font-family:"Noto Serif TC",serif;font-weight:500;
-    font-size:.85rem;color:#fff;background:var(--navy);
-    padding:13px 14px;letter-spacing:.05em;
-  }
-  .list-table td{
-    padding:13px 14px;border-bottom:1px solid var(--hair);
-    font-size:.9rem;vertical-align:top;
-  }
-  .list-table tr:last-child td{border-bottom:none;}
-  .list-table tr:hover td{background:rgba(255,255,255,.4);}
-  .sp-name{font-family:"Noto Serif TC",serif;font-weight:500;color:var(--ink);}
-  .sp-alt{font-family:"Fraunces",serif;font-style:italic;
-    color:var(--ink-soft);font-size:.86rem;}
-  .sp-jp{color:var(--ink-soft);font-size:.82rem;}
-  .sp-no{font-family:"Fraunces",serif;font-style:italic;color:var(--warmbrown);}
-  .reunion{color:var(--bright);}
-  .reunion.none{color:var(--mist);}
-
-  /* ---------- 影集 ---------- */
-  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-  .photo-frame{
-    aspect-ratio:1/1;border-radius:3px;position:relative;overflow:hidden;
-    display:flex;align-items:center;justify-content:center;flex-direction:column;
-    color:#fff;text-align:center;font-size:.78rem;letter-spacing:.04em;
-    transition:transform .3s;cursor:pointer;
-  }
-  .photo-frame:hover{transform:scale(1.03);}
-  .photo-frame svg{width:32px;height:32px;opacity:.8;margin-bottom:6px;}
-  .photo-frame:nth-child(3n+1){background:linear-gradient(140deg,var(--mist),var(--navy));}
-  .photo-frame:nth-child(3n+2){background:linear-gradient(140deg,var(--bright),#3a6e8c);}
-  .photo-frame:nth-child(3n+3){background:linear-gradient(140deg,#4a708c,var(--navy-deep));}
-
-  /* ---------- 觀察地點 ---------- */
-  .places{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
-  .place{
-    background:var(--card);border-radius:4px;padding:22px 24px;
-    transition:transform .3s,background .3s,box-shadow .3s;
-  }
-  .place:hover{transform:translateY(-3px);background:var(--card-hi);
-    box-shadow:0 12px 26px var(--shadow);}
-  .place h3{font-size:1.18rem;color:var(--navy);margin-bottom:3px;}
-  .place .season{
-    font-family:"Fraunces",serif;font-style:italic;
-    color:var(--warmbrown);font-size:.9rem;margin-bottom:12px;
-  }
-  .place .seen{font-size:.9rem;color:var(--ink-soft);margin-bottom:6px;}
-  .place .seen b{font-family:"Noto Serif TC",serif;font-weight:500;
-    color:var(--navy);font-size:.85rem;}
-
-  /* ---------- 站主 ---------- */
-  .keepers{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:30px;}
-  .keeper{
-    background:var(--card);border-radius:4px;
-    padding:30px 26px;text-align:center;
-    transition:background .3s;
-  }
-  .keeper:hover{background:var(--card-hi);}
-  .keeper .avatar{
-    width:84px;height:84px;border-radius:50%;margin:0 auto 16px;
-    display:flex;align-items:center;justify-content:center;
-  }
-  .keeper:nth-child(1) .avatar{background:linear-gradient(135deg,var(--mist),var(--navy));}
-  .keeper:nth-child(2) .avatar{background:linear-gradient(135deg,var(--bright),var(--navy));}
-  .keeper .avatar svg{width:40px;height:40px;stroke:#fff;}
-  .keeper h3{font-size:1.25rem;color:var(--maroon);margin-bottom:3px;}
-  .keeper .role{
-    font-family:"Fraunces",serif;font-style:italic;
-    color:var(--warmbrown);font-size:.92rem;margin-bottom:12px;
-  }
-  .keeper p{font-size:.92rem;color:var(--ink-soft);}
-  /* 結語：純文字 + 一條細線，不再用深色橫幅 */
-  .about-note{
-    text-align:center;font-size:.95rem;color:var(--ink-soft);
-    padding-top:24px;border-top:1px solid var(--hair);
-  }
-  .about-note .latin{color:var(--navy);font-size:1rem;}
-
-  /* ---------- 頁尾 ---------- */
-  footer{
-    background:var(--navy-deep);color:#c5d4df;text-align:center;padding:46px 28px;
-  }
-  footer p{font-size:.88rem;opacity:.85;margin-bottom:4px;}
-  footer .latin{color:var(--mist);}
-
-  /* ---------- 載入動畫 ---------- */
-  .reveal{opacity:0;transform:translateY(24px);
-    transition:opacity .7s ease,transform .7s ease;}
-  .reveal.show{opacity:1;transform:none;}
-
-  /* ---------- 手機版 ---------- */
-  @media(max-width:760px){
-    .menu-btn{display:block;}
-    .nav-links{
-      position:absolute;top:100%;left:0;right:0;
-      flex-direction:column;gap:0;
-      background:rgba(12,41,66,.97);
-      max-height:0;overflow:hidden;transition:max-height .35s;
-    }
-    .nav-links.open{max-height:440px;}
-    .nav-links li{border-top:1px solid rgba(255,255,255,.1);}
-    .nav-links a{display:block;padding:14px 28px;border:none;text-shadow:none;}
-    .cover-title{right:9%;}
-    .entry{grid-template-columns:1fr;}
-    .entry .photo{min-height:170px;}
-    .gallery{grid-template-columns:repeat(2,1fr);}
-    .places{grid-template-columns:1fr;}
-    .keepers{grid-template-columns:1fr;}
-    .list-table{font-size:.82rem;}
-    .list-table th,.list-table td{padding:9px 8px;}
-  }
+  main section{padding:80px 0;}
+  main section:nth-child(even){background:var(--bg-soft);}
+  main section:nth-child(odd){background:var(--bg-deep);}
 </style>
 </head>
 <body>
 
-<!-- ===================== 導覽列 ===================== -->
-<nav id="nav">
+<nav id="nav" class="transparent">
   <div class="nav-inner">
     <div class="brand">
+      <img class="logo" src="assets/squirrel-white.svg" alt="">
       <span>一萬種羽毛</span>
     </div>
     <button class="menu-btn" id="menuBtn" aria-label="選單">☰</button>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#journal">觀鳥日誌</a></li>
-      <li><a href="#birdlist">羽毛總錄</a></li>
+      <li><a href="journal.html">觀鳥日誌</a></li>
+      <li><a href="birdlist.html">羽毛總錄</a></li>
       <li><a href="#furlog">一千種絨毛</a></li>
-      <li><a href="#gallery">影集</a></li>
+      <li><a href="gallery.html">影集</a></li>
       <li><a href="#places">觀察地點</a></li>
-      <li><a href="#beyond">森林之外</a></li>
+      <li><a href="beyond.html">森林之外</a></li>
       <li><a href="#about">站主</a></li>
     </ul>
   </div>
 </nav>
 
-<!-- ===================== 滿屏封面 ===================== -->
 <header class="cover">
   <div class="cover-img"></div>
-
-  <!-- 標題：豎排靠右，半框開口朝上 -->
   <div class="cover-title">
     <div class="title-frame">
       <h1><span>一</span><span>萬</span><span>種</span><span>羽</span><span>毛</span></h1>
@@ -348,7 +71,6 @@
       <span>A</span><span>Birdwatching</span><span>Journal</span>
     </p>
   </div>
-
   <div class="scroll-cue" id="scrollCue">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
   </div>
@@ -356,7 +78,6 @@
 
 <main>
 
-<!-- ===================== 01 觀鳥日誌 ===================== -->
 <section id="journal">
   <div class="wrap reveal">
     <div class="sec-head">
@@ -365,46 +86,36 @@
       <p class="en">Birdwatching Journal</p>
       <p class="sub">相機大多數時候追不上小鳥，但這次終於追到了。</p>
     </div>
-
-    <!-- ▼▼▼ 一篇日誌模板：複製整個 <article>…</article> 即可新增 ▼▼▼ -->
     <article class="entry">
       <div class="photo">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M7 5l1.5-2h7L17 5"/></svg>
         放上這天的照片
       </div>
       <div>
-        <div class="entry-meta">
-          <span>2025.05.18</span><span>霞ヶ浦</span><span>晴・微風</span>
-        </div>
-        <h3>湖畔的蒼鷺與第一隻翠鳥</h3>
+        <div class="entry-meta"><span>2025.05.18</span><span>霞ヶ浦</span><span>晴・微風</span></div>
+        <h3><a href="posts/2025-05-18-kingfisher.html">湖畔的蒼鷺與第一隻翠鳥</a></h3>
         <p>清晨六點到湖邊，水面還有薄霧。蒼鷺站在淺灘一動不動，足足看了二十分鐘。回程時一道藍光掠過——是翠鳥，停在枯枝上整理羽毛，這是今年第一次清楚看到牠。</p>
-        <div class="tags">
-          <span class="tag">蒼鷺</span><span class="tag">翠鳥</span><span class="tag">白鶺鴒</span>
-        </div>
+        <div class="tags"><span class="tag">蒼鷺</span><span class="tag">翠鳥</span><span class="tag">白鶺鴒</span></div>
       </div>
     </article>
-    <!-- ▲▲▲ 模板結束 ▲▲▲ -->
-
     <article class="entry">
       <div class="photo">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M7 5l1.5-2h7L17 5"/></svg>
         放上這天的照片
       </div>
       <div>
-        <div class="entry-meta">
-          <span>2025.04.27</span><span>筑波山登山口</span><span>多雲</span>
-        </div>
-        <h3>樹冠間的山雀群</h3>
+        <div class="entry-meta"><span>2025.04.27</span><span>筑波山登山口</span><span>多雲</span></div>
+        <h3><a href="posts/2025-04-27-tits.html">樹冠間的山雀群</a></h3>
         <p>沿步道往上走，聽見一陣此起彼落的叫聲。抬頭看到大山雀和綠繡眼混群在嫩葉間覓食，動作快得幾乎拍不到。記下牠們移動的方向，下次想再找同一片林子。</p>
-        <div class="tags">
-          <span class="tag">大山雀</span><span class="tag">綠繡眼</span><span class="tag">栗耳短腳鵯</span>
-        </div>
+        <div class="tags"><span class="tag">大山雀</span><span class="tag">綠繡眼</span><span class="tag">栗耳短腳鵯</span></div>
       </div>
     </article>
+    <a href="journal.html" class="see-all">查看全部日誌
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
   </div>
 </section>
 
-<!-- ===================== 02 羽毛總錄 ===================== -->
 <section id="birdlist">
   <div class="wrap reveal">
     <div class="sec-head">
@@ -416,79 +127,24 @@
     <span class="count-badge">已記錄 7 種</span>
     <table class="list-table">
       <thead>
-        <tr>
-          <th style="width:42px;">No.</th>
-          <th>鳥種</th>
-          <th>英文名・日文名</th>
-          <th>首次觀察</th>
-          <th>再度重逢</th>
-          <th>地點</th>
-        </tr>
+        <tr><th style="width:42px;">No.</th><th>鳥種</th><th>英文名・日文名</th><th>首次觀察</th><th>再度重逢</th><th>地點</th></tr>
       </thead>
       <tbody>
-        <!-- ▼ 複製一整列 <tr>…</tr> 即可新增一種鳥 -->
-        <tr>
-          <td class="sp-no">01</td>
-          <td class="sp-name">麻雀</td>
-          <td><span class="sp-alt">Eurasian Tree Sparrow</span><br><span class="sp-jp">スズメ</span></td>
-          <td>2025.04.12</td>
-          <td class="reunion">常見</td>
-          <td>住家附近</td>
-        </tr>
-        <tr>
-          <td class="sp-no">02</td>
-          <td class="sp-name">栗耳短腳鵯</td>
-          <td><span class="sp-alt">Brown-eared Bulbul</span><br><span class="sp-jp">ヒヨドリ</span></td>
-          <td>2025.04.12</td>
-          <td class="reunion">常見</td>
-          <td>住家附近</td>
-        </tr>
-        <tr>
-          <td class="sp-no">03</td>
-          <td class="sp-name">綠繡眼</td>
-          <td><span class="sp-alt">Warbling White-eye</span><br><span class="sp-jp">メジロ</span></td>
-          <td>2025.04.27</td>
-          <td class="reunion">2025.05.10</td>
-          <td>筑波山</td>
-        </tr>
-        <tr>
-          <td class="sp-no">04</td>
-          <td class="sp-name">大山雀</td>
-          <td><span class="sp-alt">Japanese Tit</span><br><span class="sp-jp">シジュウカラ</span></td>
-          <td>2025.04.27</td>
-          <td class="reunion">2025.05.18</td>
-          <td>筑波山</td>
-        </tr>
-        <tr>
-          <td class="sp-no">05</td>
-          <td class="sp-name">白鶺鴒</td>
-          <td><span class="sp-alt">White Wagtail</span><br><span class="sp-jp">ハクセキレイ</span></td>
-          <td>2025.05.03</td>
-          <td class="reunion none">— 尚未</td>
-          <td>千波湖</td>
-        </tr>
-        <tr>
-          <td class="sp-no">06</td>
-          <td class="sp-name">蒼鷺</td>
-          <td><span class="sp-alt">Grey Heron</span><br><span class="sp-jp">アオサギ</span></td>
-          <td>2025.05.18</td>
-          <td class="reunion none">— 尚未</td>
-          <td>霞ヶ浦</td>
-        </tr>
-        <tr>
-          <td class="sp-no">07</td>
-          <td class="sp-name">普通翠鳥</td>
-          <td><span class="sp-alt">Common Kingfisher</span><br><span class="sp-jp">カワセミ</span></td>
-          <td>2025.05.18</td>
-          <td class="reunion none">— 尚未</td>
-          <td>霞ヶ浦</td>
-        </tr>
+        <tr><td class="sp-no">07</td><td class="sp-name">普通翠鳥</td><td><span class="sp-alt">Common Kingfisher</span><br><span class="sp-jp">カワセミ</span></td><td>2025.05.18</td><td class="reunion none">— 尚未</td><td>霞ヶ浦</td></tr>
+        <tr><td class="sp-no">06</td><td class="sp-name">蒼鷺</td><td><span class="sp-alt">Grey Heron</span><br><span class="sp-jp">アオサギ</span></td><td>2025.05.18</td><td class="reunion none">— 尚未</td><td>霞ヶ浦</td></tr>
+        <tr><td class="sp-no">05</td><td class="sp-name">白鶺鴒</td><td><span class="sp-alt">White Wagtail</span><br><span class="sp-jp">ハクセキレイ</span></td><td>2025.05.03</td><td class="reunion none">— 尚未</td><td>千波湖</td></tr>
+        <tr><td class="sp-no">04</td><td class="sp-name">大山雀</td><td><span class="sp-alt">Japanese Tit</span><br><span class="sp-jp">シジュウカラ</span></td><td>2025.04.27</td><td class="reunion">2025.05.18</td><td>筑波山</td></tr>
+        <tr><td class="sp-no">03</td><td class="sp-name">綠繡眼</td><td><span class="sp-alt">Warbling White-eye</span><br><span class="sp-jp">メジロ</span></td><td>2025.04.27</td><td class="reunion">2025.05.10</td><td>筑波山</td></tr>
+        <tr><td class="sp-no">02</td><td class="sp-name">栗耳短腳鵯</td><td><span class="sp-alt">Brown-eared Bulbul</span><br><span class="sp-jp">ヒヨドリ</span></td><td>2025.04.12</td><td class="reunion">常見</td><td>住家附近</td></tr>
+        <tr><td class="sp-no">01</td><td class="sp-name">麻雀</td><td><span class="sp-alt">Eurasian Tree Sparrow</span><br><span class="sp-jp">スズメ</span></td><td>2025.04.12</td><td class="reunion">常見</td><td>住家附近</td></tr>
       </tbody>
     </table>
+    <a href="birdlist.html" class="see-all">查看完整名錄
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
   </div>
 </section>
 
-<!-- ===================== 03 一千種絨毛 ===================== -->
 <section id="furlog">
   <div class="wrap reveal">
     <div class="sec-head">
@@ -497,44 +153,33 @@
       <p class="en">Animal Field Notes</p>
       <p class="sub">我們其實也很喜歡松鼠和浣熊，有一個松鼠朋友叫做毛腿鼠。</p>
     </div>
-
     <article class="entry">
       <div class="photo">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M7 5l1.5-2h7L17 5"/></svg>
         放上這天的照片
       </div>
       <div>
-        <div class="entry-meta">
-          <span>2025.04.27</span><span>筑波山</span><span>多雲</span>
-        </div>
+        <div class="entry-meta"><span>2025.04.27</span><span>筑波山</span><span>多雲</span></div>
         <h3>步道邊的日本松鼠</h3>
         <p>找山雀的時候，一隻日本松鼠從腳邊的杉樹竄上去，在枝幹中段停下來盯著我們看了幾秒。尾巴蓬鬆得像一支毛筆。這是我們第一次在筑波山看到牠。</p>
-        <div class="tags">
-          <span class="tag">日本松鼠</span>
-        </div>
+        <div class="tags"><span class="tag">日本松鼠</span></div>
       </div>
     </article>
-
     <article class="entry">
       <div class="photo">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M7 5l1.5-2h7L17 5"/></svg>
         放上這天的照片
       </div>
       <div>
-        <div class="entry-meta">
-          <span>2025.05.03</span><span>千波湖</span><span>晴</span>
-        </div>
+        <div class="entry-meta"><span>2025.05.03</span><span>千波湖</span><span>晴</span></div>
         <h3>草地上的花栗鼠</h3>
         <p>湖邊草地上看到一隻西伯利亞花栗鼠，背上的條紋很清楚。牠把臉頰塞得鼓鼓的，在地面快速移動，一靠近就鑽進石縫不見了。</p>
-        <div class="tags">
-          <span class="tag">西伯利亞花栗鼠</span>
-        </div>
+        <div class="tags"><span class="tag">西伯利亞花栗鼠</span></div>
       </div>
     </article>
   </div>
 </section>
 
-<!-- ===================== 04 影集 ===================== -->
 <section id="gallery">
   <div class="wrap reveal">
     <div class="sec-head">
@@ -544,18 +189,19 @@
       <p class="sub">所有的照片都在這裡。</p>
     </div>
     <div class="gallery">
-      <!-- ▼ 每個 <div class="photo-frame"> 是一張照片，複製即可新增 -->
-      <div class="photo-frame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/></svg>翠鳥 · 霞ヶ浦</div>
-      <div class="photo-frame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/></svg>蒼鷺 · 霞ヶ浦</div>
-      <div class="photo-frame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/></svg>日本松鼠 · 筑波山</div>
-      <div class="photo-frame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/></svg>大山雀 · 筑波山</div>
-      <div class="photo-frame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/></svg>花栗鼠 · 千波湖</div>
-      <div class="photo-frame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/></svg>晨霧 · 霞ヶ浦</div>
+      <div class="photo-frame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/></svg><span class="cap">翠鳥 · 霞ヶ浦</span></div>
+      <div class="photo-frame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/></svg><span class="cap">蒼鷺 · 霞ヶ浦</span></div>
+      <div class="photo-frame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/></svg><span class="cap">日本松鼠 · 筑波山</span></div>
+      <div class="photo-frame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/></svg><span class="cap">大山雀 · 筑波山</span></div>
+      <div class="photo-frame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/></svg><span class="cap">花栗鼠 · 千波湖</span></div>
+      <div class="photo-frame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/></svg><span class="cap">晨霧 · 霞ヶ浦</span></div>
     </div>
+    <a href="gallery.html" class="see-all">查看完整影集
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
   </div>
 </section>
 
-<!-- ===================== 觀察地點 ===================== -->
 <section id="places">
   <div class="wrap reveal">
     <div class="sec-head">
@@ -565,36 +211,14 @@
       <p class="sub">雖然旅行得很少，可是分分地點也很有趣。</p>
     </div>
     <div class="places">
-      <!-- ▼ 複製一整個 <div class="place">…</div> 即可新增地點 -->
-      <div class="place">
-        <h3>霞ヶ浦</h3>
-        <p class="season">Best season — 秋至冬</p>
-        <p class="seen"><b>鳥</b>　蒼鷺、普通翠鳥、白鶺鴒</p>
-        <p class="seen"><b>絨毛</b>　—</p>
-      </div>
-      <div class="place">
-        <h3>筑波山登山口</h3>
-        <p class="season">Best season — 春・秋</p>
-        <p class="seen"><b>鳥</b>　大山雀、綠繡眼、栗耳短腳鵯</p>
-        <p class="seen"><b>絨毛</b>　日本松鼠</p>
-      </div>
-      <div class="place">
-        <h3>千波湖</h3>
-        <p class="season">Best season — 全年</p>
-        <p class="seen"><b>鳥</b>　白鶺鴒</p>
-        <p class="seen"><b>絨毛</b>　西伯利亞花栗鼠</p>
-      </div>
-      <div class="place">
-        <h3>住家附近</h3>
-        <p class="season">Best season — 全年</p>
-        <p class="seen"><b>鳥</b>　麻雀、栗耳短腳鵯</p>
-        <p class="seen"><b>絨毛</b>　—</p>
-      </div>
+      <div class="place"><h3>霞ヶ浦</h3><p class="season">Best season — 秋至冬</p><p class="seen"><b>鳥</b>　蒼鷺、普通翠鳥、白鶺鴒</p><p class="seen"><b>絨毛</b>　—</p></div>
+      <div class="place"><h3>筑波山登山口</h3><p class="season">Best season — 春・秋</p><p class="seen"><b>鳥</b>　大山雀、綠繡眼、栗耳短腳鵯</p><p class="seen"><b>絨毛</b>　日本松鼠</p></div>
+      <div class="place"><h3>千波湖</h3><p class="season">Best season — 全年</p><p class="seen"><b>鳥</b>　白鶺鴒</p><p class="seen"><b>絨毛</b>　西伯利亞花栗鼠</p></div>
+      <div class="place"><h3>住家附近</h3><p class="season">Best season — 全年</p><p class="seen"><b>鳥</b>　麻雀、栗耳短腳鵯</p><p class="seen"><b>絨毛</b>　—</p></div>
     </div>
   </div>
 </section>
 
-<!-- ===================== 05 森林之外 ===================== -->
 <section id="beyond">
   <div class="wrap reveal">
     <div class="sec-head">
@@ -603,24 +227,34 @@
       <p class="en">Everyday Notes</p>
       <p class="sub">看鳥的時候也會看天。</p>
     </div>
-
     <article class="entry">
       <div class="photo">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M7 5l1.5-2h7L17 5"/></svg>
         放上一張照片
       </div>
       <div>
-        <div class="entry-meta">
-          <span>2025.05.18</span><span>霞ヶ浦</span>
-        </div>
-        <h3>河堤邊的油菜花</h3>
+        <div class="entry-meta"><span>2025.05.18</span><span>霞ヶ浦</span></div>
+        <h3><a href="posts/2025-05-18-rapeseed.html">河堤邊的油菜花</a></h3>
         <p>等翠鳥出現的空檔，注意到河堤兩旁開滿了油菜花，風一吹整片黃色都在晃。鐵塔、雲、流水和黃花——觀鳥的好處之一，就是會順便把這些都看進眼裡。</p>
       </div>
     </article>
+    <article class="entry">
+      <div class="photo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M7 5l1.5-2h7L17 5"/></svg>
+        放上一張照片
+      </div>
+      <div>
+        <div class="entry-meta"><span>2025.04.27</span><span>筑波山</span></div>
+        <h3><a href="posts/2025-04-27-sky.html">下山時的那片雲</a></h3>
+        <p>下山的時候天色開始變，雲層壓得很低，光從縫隙裡漏下來。我們在登山口站了一會兒才走，看鳥的時候，也會這樣看天。</p>
+      </div>
+    </article>
+    <a href="beyond.html" class="see-all">查看全部隨錄
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
   </div>
 </section>
 
-<!-- ===================== 06 站主 ===================== -->
 <section id="about">
   <div class="wrap reveal">
     <div class="sec-head">
@@ -629,20 +263,14 @@
       <p class="en">About Us</p>
     </div>
     <div class="keepers">
-      <!-- ▼ 站主一：改成你的介紹 -->
       <div class="keeper">
-        <div class="avatar">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="9" r="4"/><path d="M5 20c0-4 3.5-6 7-6s7 2 7 6"/></svg>
-        </div>
+        <div class="avatar"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="9" r="4"/><path d="M5 20c0-4 3.5-6 7-6s7 2 7 6"/></svg></div>
         <h3>站主一</h3>
         <p class="role">文字 · 網站維護</p>
         <p>負責把每一次的觀察寫成日誌，也照顧著這個小站。偶爾也按下快門。</p>
       </div>
-      <!-- ▼ 站主二：改成另一位的介紹 -->
       <div class="keeper">
-        <div class="avatar">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="9" r="4"/><path d="M5 20c0-4 3.5-6 7-6s7 2 7 6"/></svg>
-        </div>
+        <div class="avatar"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="9" r="4"/><path d="M5 20c0-4 3.5-6 7-6s7 2 7 6"/></svg></div>
         <h3>站主二</h3>
         <p class="role">攝影</p>
         <p>站裡多數照片出自這雙眼睛與這雙手。也會在現場幫忙辨識、寫下筆記。</p>
@@ -657,37 +285,28 @@
 
 </main>
 
-<!-- ===================== 頁尾 ===================== -->
 <footer>
   <p class="latin">One Thousand Feathers, and More.</p>
   <p>一萬種羽毛 · 一本觀鳥手記</p>
 </footer>
 
 <script>
-  /* 導覽列：捲動後變深藍底 */
   const nav = document.getElementById('nav');
   const onScroll = () => {
     if (window.scrollY > window.innerHeight - 90) nav.classList.add('scrolled');
     else nav.classList.remove('scrolled');
   };
-  window.addEventListener('scroll', onScroll);
-  onScroll();
-
-  /* 手機選單開合 */
+  window.addEventListener('scroll', onScroll); onScroll();
   const btn = document.getElementById('menuBtn');
   const links = document.getElementById('navLinks');
   btn.addEventListener('click', () => links.classList.toggle('open'));
   links.querySelectorAll('a').forEach(a =>
     a.addEventListener('click', () => links.classList.remove('open')));
-
-  /* 封面箭頭：點一下捲到第一個區塊 */
   document.getElementById('scrollCue').addEventListener('click', () => {
     document.getElementById('journal').scrollIntoView({ behavior: 'smooth' });
   });
-
-  /* 捲動時淡入 */
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+  const io = new IntersectionObserver(es => {
+    es.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 </script>
